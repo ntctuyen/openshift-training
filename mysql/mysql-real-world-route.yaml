@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: mysql-real-world-route
+spec:
+  host: mysql-tuyen.apps.openshift.ubitec.local
+  to:
+    kind: Service
+    name: mysql-real-world-service
+  port:
+    targetPort: mysql-real-world-port

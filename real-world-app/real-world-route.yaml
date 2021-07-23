@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Route
+metadata:
+  name: real-world-route
+spec:
+  host: tuyen.apps.openshift.ubitec.local
+  to:
+    kind: Service
+    name: real-world-service
+  port:
+    targetPort: real-world-port

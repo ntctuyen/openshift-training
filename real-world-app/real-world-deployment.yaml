@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: real-world-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: real-world-deployment
+  template:
+    metadata:
+      labels:
+        app: real-world-deployment
+    spec:
+      imagePullSecrets:
+        - name: docker-hub-credential
+      containers:
+        - name: real-world-app
+          imagePullPolicy: Always
+          image: ntctuyen/real-world
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          envFrom:
+          - configMapRef:
+              name: real-world-config

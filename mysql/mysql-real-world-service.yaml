@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-real-world-service
+spec:
+  selector: 
+    app: mysql-real-world-deployment
+  ports:
+  - name: mysql-real-world-port
+    protocol: TCP
+    port: 3306
+    targetPort: 3306

@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-real-world-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-real-world-deployment
+  template:
+    metadata:
+      labels:
+        app: mysql-real-world-deployment
+    spec:
+      imagePullSecrets:
+        - name: docker-hub-credential
+      containers:
+        - name: mysql
+          imagePullPolicy: Always
+          image: mysql
+          ports:
+            - containerPort: 3306
+              protocol: TCP
+          volumeMounts:  
+          - mountPath: /docker-entrypoint-initdb.d
+            name: real-world-data
+            subPath: mysql/init
+          - mountPath: /var/lib/mysql
+            name: real-world-data
+            subPath: mysql/data
+          envFrom:
+          - configMapRef:
+              name: mysql-real-world-config
+          - secretRef:
+              name: shared-sealedsecret-database
+      volumes:
+      - name: real-world-data
+        persistentVolumeClaim:
+          claimName: tuyen-real-world-pvc-data
